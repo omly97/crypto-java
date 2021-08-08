@@ -1,4 +1,4 @@
-package oumarly.app.utils;
+package oumarly.app.crypto;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -27,7 +27,6 @@ public class MyCipher {
 		return cipher.doFinal(data);
 	}
 
-
 	/**
 	 * @author Oumar Ly
 	 * @apiNote crypt byte array
@@ -41,7 +40,6 @@ public class MyCipher {
 		return cryptoByte(algo, key, data, true);
 	}
 
-
 	/**
 	 * @author Oumar Ly
 	 * @apiNote decrypt byte array
@@ -54,7 +52,6 @@ public class MyCipher {
 	public static byte[] decryptByteArray(String algo, SecretKey key, byte[] data) throws Exception {
 		return cryptoByte(algo, key, data, false);
 	}
-	
 
 	/**
 	 * @author Oumar Ly
@@ -70,7 +67,6 @@ public class MyCipher {
 		return Converter.toHex(data);
 	}
 
-
 	/**
 	 * @author Oumar Ly
 	 * @apiNote decrypt hex text (crypted text)
@@ -84,8 +80,6 @@ public class MyCipher {
 		byte[] data = cryptoByte(algo, key, Converter.toBytes(hexStrng), false);
 		return new String(data);
 	}
-
-
 
 	/**
 	 * @author Oumar Ly

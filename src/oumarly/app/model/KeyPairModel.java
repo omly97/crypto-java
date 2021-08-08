@@ -1,9 +1,13 @@
 package oumarly.app.model;
 
+import java.security.KeyFactory;
+import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 
-import oumarly.app.utils.Converter;
+import oumarly.app.crypto.Converter;
 
 public class KeyPairModel {
 
@@ -17,22 +21,20 @@ public class KeyPairModel {
 	private String privateKeyFormat;
 	private String privateKeyEncodageHex;
 
-
 	public KeyPairModel() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public KeyPairModel(String nom, String algorithme, PublicKey publicKey, PrivateKey privateKey) {
+	public KeyPairModel(String nom, String algorithme, KeyPair keyPair) {
 		this.nom = nom;
 		this.algorithme = algorithme;
-		publicKeyTaille = publicKey.getEncoded().length * 8;
-		publicKeyFormat = publicKey.getFormat();
-		publicKeyEncodageHex = Converter.toHex(publicKey.getEncoded());
-		privateKeyTaille = privateKey.getEncoded().length * 8;
-		privateKeyFormat = privateKey.getFormat();
-		privateKeyEncodageHex = Converter.toHex(privateKey.getEncoded());
+		publicKeyTaille = keyPair.getPublic().getEncoded().length * 8;
+		publicKeyFormat = keyPair.getPublic().getFormat();
+		publicKeyEncodageHex = Converter.toHex(keyPair.getPublic().getEncoded());
+		privateKeyTaille = keyPair.getPrivate().getEncoded().length * 8;
+		privateKeyFormat = keyPair.getPrivate().getFormat();
+		privateKeyEncodageHex = Converter.toHex(keyPair.getPrivate().getEncoded());
 	}
-
 
 	public Long getId() {
 		return id;
@@ -106,4 +108,17 @@ public class KeyPairModel {
 		this.privateKeyEncodageHex = privateKeyEncodageHex;
 	}
 	
+	public PublicKey getPublicKey() throws Exception {
+		byte[] encodedKey = Converter.toBytes(publicKeyEncodageHex);
+		X509EncodedKeySpec pubKeySpec = new X509EncodedKeySpec(encodedKey);
+		KeyFactory keyFactory = KeyFactory.getInstance(algorithme);
+		return keyFactory.generatePublic(pubKeySpec);
+	}
+	
+	public PrivateKey getPrivateKey() throws Exception {
+		byte[] encodedKey = Converter.toBytes(privateKeyEncodageHex);
+		PKCS8EncodedKeySpec privkeySpec = new PKCS8EncodedKeySpec(encodedKey);
+		KeyFactory keyFactory = KeyFactory.getInstance(algorithme);
+		return keyFactory.generatePrivate(privkeySpec);
+	}
 }

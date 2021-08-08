@@ -1,4 +1,4 @@
-package oumarly.app.utils;
+package oumarly.app.crypto;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;

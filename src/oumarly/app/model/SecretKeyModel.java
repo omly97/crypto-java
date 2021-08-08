@@ -1,8 +1,9 @@
 package oumarly.app.model;
 
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
-import oumarly.app.utils.Converter;
+import oumarly.app.crypto.Converter;
 
 public class SecretKeyModel {
 
@@ -12,7 +13,6 @@ public class SecretKeyModel {
 	private int taille;
 	private String format;
 	private String encodageHex;
-
 
 	public SecretKeyModel() {
 		// TODO Auto-generated constructor stub
@@ -25,7 +25,6 @@ public class SecretKeyModel {
 		format = secretKey.getFormat();
 		encodageHex = Converter.toHex(secretKey.getEncoded());
 	}
-
 
 	public Long getId() {
 		return id;
@@ -75,4 +74,7 @@ public class SecretKeyModel {
 		this.encodageHex = encodageHex;
 	}
 	
+	public SecretKey getSecretKey() {
+		return new SecretKeySpec(Converter.toBytes(encodageHex), algorithme);
+	}
 }

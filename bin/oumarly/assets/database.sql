@@ -6,7 +6,7 @@ CREATE TABLE `secret_keys` (
     `algorithme` VARCHAR(255) NOT NULL,
     `taille` INTEGER NOT NULL,
     `format`  VARCHAR(255) NOT NULL,
-    `encodage_hex`  VARCHAR(255) NOT NULL
+    `encodage_hex`  TEXT NOT NULL
 );
 
 
@@ -18,9 +18,9 @@ CREATE TABLE `key_pairs` (
     `algorithme` VARCHAR(255) NOT NULL,
     `public_key_taille` INTEGER NOT NULL,
     `public_key_format`  VARCHAR(255) NOT NULL,
-    `public_key_encodage_hex`  VARCHAR(255) NOT NULL,
+    `public_key_encodage_hex`  TEXT NOT NULL,
     `private_key_taille` INTEGER NOT NULL,
     `private_key_format`  VARCHAR(255) NOT NULL,
-    `private_key_encodage_hex`  VARCHAR(255) NOT NULL
+    `private_key_encodage_hex`  TEXT NOT NULL
 );
 
