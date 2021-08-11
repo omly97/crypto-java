@@ -15,9 +15,11 @@ import oumarly.Kit;
 public class Navigation extends JPanel {
 	
 	private JButton welcomeBtn;
-	private JButton symBtn;
-	private JButton assymBtn;
-	private JButton keysBtn;
+	private JButton symCryptoBtn;
+	private JButton symKeyBtn;
+	private JButton assymCryptoBtn;
+	private JButton assymKeyBtn;
+	private JButton createKeyBtn;
 
 	private Vector<JButton> veButtons;
 
@@ -27,26 +29,60 @@ public class Navigation extends JPanel {
 		setBackground(Kit.DARK);
 
 		welcomeBtn = createMenuButton("Accueil");
-		symBtn = createMenuButton("Cryptographie symetrique");
-		assymBtn = createMenuButton("Cryptographie asymetrique");
-		keysBtn = createMenuButton("Gestion de cles");
+		symCryptoBtn = createMenuButton("Cryptographie symetrique");
+		symKeyBtn = createMenuButton("Cle symetrique");
+		assymCryptoBtn = createMenuButton("Cryptographie asymetrique");
+		assymKeyBtn = createMenuButton("Cle asymetrique");
+		createKeyBtn = createMenuButton("Creation de cles");
 		
-		setLayout(new GridLayout(4, 1));
+		setLayout(new GridLayout(6, 1));
 		add(welcomeBtn);
-		add(symBtn);
-		add(assymBtn);
-		add(keysBtn);
+		add(symCryptoBtn);
+		add(assymCryptoBtn);
+		add(symKeyBtn);
+		add(assymKeyBtn);
+		add(createKeyBtn);
 		
 		veButtons = new Vector<JButton>();
 		veButtons.add(welcomeBtn);
-		veButtons.add(symBtn);
-		veButtons.add(assymBtn);
-		veButtons.add(keysBtn);
+		veButtons.add(symCryptoBtn);
+		veButtons.add(assymCryptoBtn);
+		veButtons.add(symKeyBtn);
+		veButtons.add(assymKeyBtn);
+		veButtons.add(createKeyBtn);
 	}
 
+	public JButton getWelcomeBtn() {
+		return welcomeBtn;
+	}
+
+	public JButton getSymCryptoBtn() {
+		return symCryptoBtn;
+	}
+
+	public JButton getSymKeyBtn() {
+		return symKeyBtn;
+	}
+
+	public JButton getAssymCryptoBtn() {
+		return assymCryptoBtn;
+	}
+
+	public JButton getAssymKeyBtn() {
+		return assymKeyBtn;
+	}
+	
+	public JButton getCreateKeyBtn() {
+		return createKeyBtn;
+	}
 
 	private JButton createMenuButton(String text) {
-		JButton b = Kit.createDarkButton(text);
+		JButton b = new JButton(text);
+		b.setBorderPainted(true);
+		b.setFocusPainted(false);
+		b.setBackground(Kit.DARK);
+		b.setForeground(Kit.WHITE);
+		b.setBorder(new MatteBorder(1, 1, 1, 1, Kit.WHITE));
 		b.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -60,25 +96,4 @@ public class Navigation extends JPanel {
 		});
 		return b;
 	}
-
-
-	public JButton getWelcomeBtn() {
-		return welcomeBtn;
-	}
-
-
-	public JButton getSymBtn() {
-		return symBtn;
-	}
-
-
-	public JButton getAssymBtn() {
-		return assymBtn;
-	}
-
-
-	public JButton getKeysBtn() {
-		return keysBtn;
-	}
-	
 }

@@ -1,3 +1,12 @@
+CREATE USER  'dev'@'localhost' IDENTIFIED BY "Passe123";
+
+CREATE DATABASE IF NOT EXISTS DB_CRYPTO;
+
+GRANT ALL ON DB_CRYPTO.* TO 'dev'@'localhost';
+
+FLUSH PRIVILEGES;
+
+
 DROP TABLE IF EXISTS `secret_keys`;
 
 CREATE TABLE `secret_keys` (

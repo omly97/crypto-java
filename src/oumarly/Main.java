@@ -5,20 +5,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.security.Security;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
-import oumarly.views.layouts.CardLayoutVue;
 import oumarly.views.layouts.Navigation;
+import oumarly.views.layouts.Router;
 
 public class Main {
 	
 	private static JSplitPane splitPane;
 	private static Navigation navigation;
-	private static CardLayoutVue cardLayoutVue;
+	private static Router router;
 
 
 	public static void main(String[] args) {
@@ -28,13 +27,55 @@ public class Main {
 		// create components
 		navigation = new Navigation();
 		navigation.setMinimumSize(new Dimension(250, 550));
-		cardLayoutVue = new CardLayoutVue();
+		router = new Router();
+		
+		navigation.getWelcomeBtn().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				router.showWelcome();
+			}
+		});
 
-		// link navigation and cardLayoutVue
-		linkButtontoVue(navigation.getWelcomeBtn(), cardLayoutVue.PANEL_WELCOME);
-		linkButtontoVue(navigation.getSymBtn(), cardLayoutVue.PANEL_CRYPTO_SYMMETRIC);
-		linkButtontoVue(navigation.getAssymBtn(), cardLayoutVue.PANEL_CRYPTO_ASSYMMETRIC);
-		linkButtontoVue(navigation.getKeysBtn(), cardLayoutVue.PANEL_KEYS);
+		navigation.getSymCryptoBtn().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				router.showSymmetricCrypto();
+			}
+		});
+
+		navigation.getAssymCryptoBtn().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				router.showAsymmetricCrypto();;
+			}
+		});
+
+		navigation.getSymKeyBtn().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				router.showSymmetricKey();
+			}
+		});
+
+		navigation.getAssymKeyBtn().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				router.showAsymmetricKey();
+			}
+		});
+		
+		navigation.getCreateKeyBtn().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				router.showCreateKey();
+			}
+		});
 
 		// create split pane
 		splitPane = new JSplitPane();
@@ -42,7 +83,7 @@ public class Main {
 		splitPane.setResizeWeight(0);
 		splitPane.setDividerSize(5);
 		splitPane.setLeftComponent(navigation);
-		splitPane.setRightComponent(cardLayoutVue);
+		splitPane.setRightComponent(router);
 
 		// create frame
 		JFrame frame = new JFrame("crypto m2tdsi");
@@ -52,16 +93,5 @@ public class Main {
 		frame.setMinimumSize(new Dimension(900, 550));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-	}
-
-
-	private static void linkButtontoVue(JButton button, String panelName) {
-		button.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				cardLayoutVue.showPanel(panelName);
-			}
-		});
 	}
 }
