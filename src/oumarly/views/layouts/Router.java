@@ -49,7 +49,7 @@ public class Router extends JPanel {
 		add(ASYMMETRIC_CRYPTO, assymetricCrypto);
 		add(ASYMMETRIC_KEY, assymetricKey);
 		add(CREATE_KEY, createKey);
-		setBackground(Kit.DARK);
+		setBackground(Kit.WHITE);
 	}
 	
 	public void showWelcome() {

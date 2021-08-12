@@ -48,6 +48,7 @@ public class AssymetricKey extends JPanel {
 		setLayout(new GridLayout(0, 1));
 		add(scPane);
 		setBorder(new EmptyBorder(20, 20, 20, 20));
+		setOpaque(false);
 	}
 	
 	public void fetchKeyPairs() throws SQLException {

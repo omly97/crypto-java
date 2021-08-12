@@ -26,7 +26,6 @@ public class Navigation extends JPanel {
 
 	public Navigation() {
 		super();
-		setBackground(Kit.DARK);
 
 		welcomeBtn = createMenuButton("Accueil");
 		symCryptoBtn = createMenuButton("Cryptographie symetrique");
@@ -42,6 +41,7 @@ public class Navigation extends JPanel {
 		add(symKeyBtn);
 		add(assymKeyBtn);
 		add(createKeyBtn);
+		setBackground(Kit.XDARK);
 		
 		veButtons = new Vector<JButton>();
 		veButtons.add(welcomeBtn);
@@ -80,18 +80,18 @@ public class Navigation extends JPanel {
 		JButton b = new JButton(text);
 		b.setBorderPainted(true);
 		b.setFocusPainted(false);
-		b.setBackground(Kit.DARK);
-		b.setForeground(Kit.WHITE);
-		b.setBorder(new MatteBorder(1, 1, 1, 1, Kit.WHITE));
+		b.setBackground(Kit.XDARK);
+		b.setForeground(Kit.XWHITE);
+		b.setBorder(new MatteBorder(1, 1, 1, 1, Kit.XWHITE));
 		b.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				for (JButton btn : veButtons) {
-					btn.setBackground(Kit.DARK);
-					btn.setBorder(new MatteBorder(1, 1, 1, 1, Kit.WHITE));
+					btn.setBackground(Kit.XDARK);
+					btn.setBorder(new MatteBorder(1, 1, 1, 1, Kit.XDARK));
 				}
-				b.setBackground(Kit.GRAY);
-				b.setBorder(new MatteBorder(0, 7, 0, 0, Kit.BLUE));
+				b.setBackground(Kit.XGRAY);
+				b.setBorder(new MatteBorder(0, 7, 0, 0, Kit.XBLUE));
 			}
 		});
 		return b;

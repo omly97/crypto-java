@@ -7,5 +7,6 @@ public class Welcome extends JPanel {
 
 	public Welcome() {
 		super();
+		setOpaque(false);
 	}
 }
