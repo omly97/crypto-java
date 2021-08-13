@@ -1,7 +1,6 @@
 package oumarly.views.screens;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileSystemView;
 
+import oumarly.Kit;
 import oumarly.app.crypto.MyCipher;
 import oumarly.app.dao.SecretKeyDao;
 import oumarly.app.model.SecretKeyModel;
@@ -26,10 +26,12 @@ import oumarly.app.model.SecretKeyModel;
 @SuppressWarnings("serial")
 public class SymmetricCrypto extends JPanel implements ActionListener {
 	
+	private JPanel panelNord;
 	private JPanel panelCentre;
 	private JPanel panelSud;
 	private JPanel panelFile;
 	private JPanel panelFolder;
+	private JLabel labelAlert;
 	private JLabel labelFile;
 	private JLabel labelFolder;
 	private JLabel labelKey;
@@ -53,10 +55,12 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 		filename = "";
 
 		// create
+		panelNord = new JPanel();
 		panelCentre = new JPanel();
 		panelSud = new JPanel();
 		panelFile = new JPanel();
 		panelFolder = new JPanel();
+		labelAlert = new JLabel("Alerte Information");
 		labelFile = new JLabel("Fichier à chiffrer");
 		labelFolder = new JLabel("Dossier destination");
 		labelKey = new JLabel("Choisissez votre cle");
@@ -69,6 +73,9 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 		bDecrypt = new JButton("Dechiffrer");
 		
 		// position
+		panelNord.setLayout(new BorderLayout());
+		panelNord.add(labelAlert, BorderLayout.CENTER);
+
 		panelFile.setLayout(new BorderLayout());
 		panelFile.add(txtFile, BorderLayout.CENTER);
 		panelFile.add(bFile, BorderLayout.EAST);
@@ -91,21 +98,24 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 		panelSud.add(bDecrypt);
 		panelSud.setBorder(new EmptyBorder(30, 0, 0, 0));
 		
-		// JPanel
+		// Design JPanel
 		panelCentre.setOpaque(false);
 		panelSud.setOpaque(false);
 		panelFile.setOpaque(false);
 		panelFolder.setOpaque(false);
-		
-		// JTextField
-		txtFile.setEditable(false);
-		txtFile.setOpaque(false);
-		txtFolder.setEditable(false);
-		txtFolder.setOpaque(false);
-		
-		// Buttons
-		bCrypt.setPreferredSize(new Dimension(100, 50));
-		bDecrypt.setPreferredSize(new Dimension(100, 50));
+
+		// Design UI
+		Kit.makeAlertInfo(panelNord, labelAlert);
+		Kit.designLabel(labelFile);
+		Kit.designLabel(labelFolder);
+		Kit.designLabel(labelKey);
+		Kit.designTextField(txtFile);
+		Kit.designTextField(txtFolder);
+		Kit.designComboBox(comboKey);
+		Kit.designButton(bCrypt);
+		Kit.designButton(bDecrypt);
+		Kit.designButtonFileChosser(bFile);
+		Kit.designButtonFileChosser(bFolder);
 		
 		// addActionListener
 		bFile.addActionListener(this);
@@ -114,11 +124,12 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 		bDecrypt.addActionListener(this);
 
 		// this
+		setOpaque(false);
 		setLayout(new BorderLayout());
+		add(panelNord, BorderLayout.NORTH);
 		add(panelCentre, BorderLayout.CENTER);
 		add(panelSud, BorderLayout.SOUTH);
-		setBorder(new EmptyBorder(150, 100, 200, 100));
-		setOpaque(false);
+		setBorder(new EmptyBorder(100, 100, 150, 100));
 	}
 	
 	public void loadKeys() throws SQLException {

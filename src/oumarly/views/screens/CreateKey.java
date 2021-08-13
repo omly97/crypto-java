@@ -1,7 +1,6 @@
 package oumarly.views.screens;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import oumarly.Kit;
 import oumarly.app.crypto.MyKey;
 import oumarly.app.dao.KeyPairDao;
 import oumarly.app.dao.SecretKeyDao;
@@ -24,8 +24,10 @@ import oumarly.app.model.SecretKeyModel;
 @SuppressWarnings("serial")
 public class CreateKey extends JPanel implements ActionListener {
 
+	private JPanel panelNord;
 	private JPanel panelCentre;
 	private JPanel panelSud;
+	private JLabel labelAlert;
 	private JLabel labelNom;
 	private JLabel labelAlgo;
 	private JLabel labelTaille;
@@ -44,8 +46,10 @@ public class CreateKey extends JPanel implements ActionListener {
 		keyPairDao = new KeyPairDao();
 		
 		// create
+		panelNord = new JPanel();
 		panelCentre = new JPanel();
 		panelSud = new JPanel();
+		labelAlert = new JLabel("Alerte Information");
 		labelNom = new JLabel("Nom de votre clé (juste pour nommer)");
 		labelAlgo = new JLabel("Algorithme ou transformation");
 		labelTaille = new JLabel("Taille de la clé");
@@ -56,6 +60,9 @@ public class CreateKey extends JPanel implements ActionListener {
 		bAsymmetric = new JButton("Créer paire de clés");
 		
 		// position
+		panelNord.setLayout(new BorderLayout());
+		panelNord.add(labelAlert, BorderLayout.CENTER);
+
 		panelCentre.setLayout(new GridLayout(6, 1, 0, 5));
 		panelCentre.add(labelNom);
 		panelCentre.add(txtNom);
@@ -69,29 +76,32 @@ public class CreateKey extends JPanel implements ActionListener {
 		panelSud.add(bAsymmetric);
 		panelSud.setBorder(new EmptyBorder(30, 0, 0, 0));
 		
-		// JPanel
+		// Design JPanel
 		panelCentre.setOpaque(false);
 		panelSud.setOpaque(false);
 		
-		// JTextField
-		txtNom.setOpaque(false);
-		txtAlgo.setOpaque(false);
-		txtTaille.setOpaque(false);
-		
-		// Buttons
-		bSymmetric.setPreferredSize(new Dimension(100, 50));
-		bAsymmetric.setPreferredSize(new Dimension(100, 50));
+		// Design UI
+		Kit.makeAlertInfo(panelNord, labelAlert);
+		Kit.designLabel(labelNom);
+		Kit.designLabel(labelAlgo);
+		Kit.designLabel(labelTaille);
+		Kit.designTextField(txtNom);
+		Kit.designTextField(txtAlgo);
+		Kit.designTextField(txtTaille);
+		Kit.designButton(bSymmetric);
+		Kit.designButton(bAsymmetric);
 
 		// addActionListener
 		bSymmetric.addActionListener(this);
 		bAsymmetric.addActionListener(this);
 
 		// this
+		setOpaque(false);
 		setLayout(new BorderLayout());
+		add(panelNord, BorderLayout.NORTH);
 		add(panelCentre, BorderLayout.CENTER);
 		add(panelSud, BorderLayout.SOUTH);
-		setBorder(new EmptyBorder(150, 100, 200, 100));
-		setOpaque(false);
+		setBorder(new EmptyBorder(100, 100, 150, 100));
 	}
 	
 	private void resetData() {

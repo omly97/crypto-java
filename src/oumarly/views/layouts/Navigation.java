@@ -38,9 +38,9 @@ public class Navigation extends JPanel {
 		add(welcomeBtn);
 		add(symCryptoBtn);
 		add(assymCryptoBtn);
+		add(createKeyBtn);
 		add(symKeyBtn);
 		add(assymKeyBtn);
-		add(createKeyBtn);
 		setBackground(Kit.XDARK);
 		
 		veButtons = new Vector<JButton>();
