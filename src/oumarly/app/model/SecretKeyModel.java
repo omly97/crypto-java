@@ -10,19 +10,19 @@ public class SecretKeyModel {
 	private Long id;
 	private String nom;
 	private String algorithme;
+	private String provider;
 	private int taille;
-	private String format;
 	private String encodageHex;
 
 	public SecretKeyModel() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public SecretKeyModel(String nom, SecretKey secretKey) {
+	public SecretKeyModel(String nom, String provider, SecretKey secretKey) {
 		this.nom = nom;
+		this.provider = provider;
 		algorithme = secretKey.getAlgorithm();
 		taille = secretKey.getEncoded().length * 8;
-		format = secretKey.getFormat();
 		encodageHex = Converter.toHex(secretKey.getEncoded());
 	}
 
@@ -58,12 +58,12 @@ public class SecretKeyModel {
 		this.taille = taille;
 	}
 
-	public String getFormat() {
-		return format;
+	public String getProvider() {
+		return provider;
 	}
 
-	public void setFormat(String format) {
-		this.format = format;
+	public void setProvider(String provider) {
+		this.provider = provider;
 	}
 
 	public String getEncodageHex() {

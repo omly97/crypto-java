@@ -38,9 +38,11 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 	private JLabel labelFile;
 	private JLabel labelFolder;
 	private JLabel labelKey;
+	private JLabel labelProvider;
 	private JTextField txtFile;
 	private JTextField txtFolder;
 	private JComboBox<String> comboKey;
+	private JTextField txtProvider;
 	private JButton bFile;
 	private JButton bFolder;
 	private JButton bCrypt;
@@ -70,9 +72,11 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 		labelFile = new JLabel("Fichier à chiffrer");
 		labelFolder = new JLabel("Dossier destination");
 		labelKey = new JLabel("Choisissez votre cle");
+		labelProvider = new JLabel("Provider (optionnel)");
 		txtFile = new JTextField();
 		txtFolder = new JTextField();
 		comboKey = new JComboBox<String>();
+		txtProvider = new JTextField();
 		bFile = new JButton("Parcourir");
 		bFolder = new JButton("Parcourir");
 		bCrypt = new JButton("Chiffrer");
@@ -85,7 +89,7 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 		panelNord.setLayout(new GridLayout(2, 1));
 		panelNord.add(panelTitre);
 		panelNord.add(panelAlerte);
-		panelNord.setBorder(new EmptyBorder(0, 0, 30, 0));
+		panelNord.setBorder(new EmptyBorder(0, 0, 20, 0));
 
 		panelFile.setLayout(new BorderLayout());
 		panelFile.add(txtFile, BorderLayout.CENTER);
@@ -96,13 +100,15 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 		panelFolder.add(txtFolder, BorderLayout.CENTER);
 		panelFolder.add(bFolder, BorderLayout.EAST);
 		
-		panelCentre.setLayout(new GridLayout(6, 1, 0, 5));
+		panelCentre.setLayout(new GridLayout(8, 1, 0, 5));
 		panelCentre.add(labelFile);
 		panelCentre.add(panelFile);
 		panelCentre.add(labelFolder);
 		panelCentre.add(panelFolder);
 		panelCentre.add(labelKey);
 		panelCentre.add(comboKey);
+		panelCentre.add(labelProvider);
+		panelCentre.add(txtProvider);
 		
 		panelSud.setLayout(new GridLayout(1, 2, 50, 0));
 		panelSud.add(bCrypt);
@@ -123,9 +129,11 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 		Kit.designLabel(labelFile);
 		Kit.designLabel(labelFolder);
 		Kit.designLabel(labelKey);
+		Kit.designLabel(labelProvider);
 		Kit.designTextField(txtFile);
 		Kit.designTextField(txtFolder);
 		Kit.designComboBox(comboKey);
+		Kit.designTextField(txtProvider);
 		Kit.designButton(bCrypt);
 		Kit.designButton(bDecrypt);
 		Kit.designButtonFileChosser(bFile);
@@ -143,12 +151,13 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 		add(panelNord, BorderLayout.NORTH);
 		add(panelCentre, BorderLayout.CENTER);
 		add(panelSud, BorderLayout.SOUTH);
-		setBorder(new EmptyBorder(80, 100, 80, 100));
+		setBorder(new EmptyBorder(40, 100, 40, 100));
 	}
 	
 	private void resetData() {
 		txtFile.setText("");
 		txtFolder.setText("");
+		txtProvider.setText("");
 	}
 	
 	private void loadKeys() throws SQLException {
@@ -207,10 +216,14 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 			String inputfile = txtFile.getText();
 			String outputfile = txtFolder.getText() + "/chiffre-" + filename;
 			SecretKeyModel KeyModel = getSelectedKey();
+			String provider = txtProvider.getText();
 			try {
-				MyCipher.cryptFile(KeyModel.getAlgorithme(), KeyModel.getSecretKey(), inputfile, outputfile);
+				if (provider.length() == 0)
+					MyCipher.cryptFile(KeyModel.getAlgorithme(), KeyModel.getSecretKey(), inputfile, outputfile);
+				else
+					MyCipher.cryptFile(KeyModel.getAlgorithme(), provider, KeyModel.getSecretKey(), inputfile, outputfile);
 				JOptionPane.showMessageDialog(this, "Votre fichier est chiffre avec succes.");
-				labelAlert.setText("Votre fichier est chiffre avec succes. " + outputfile);
+				labelAlert.setText("Success -> " + outputfile);
 				Kit.makeAlertSuccess(panelAlerte, labelAlert);
 				resetData();
 			} catch (Exception e) {
@@ -219,16 +232,20 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 				Kit.makeAlertDanger(panelAlerte, labelAlert);
 			}
 		}
-		
+	
 		// TODO decrypt file
 		if (ae.getSource() == bDecrypt) {
 			String inputfile = txtFile.getText();
 			String outputfile = txtFolder.getText() + "/dechiffre-" + filename;
 			SecretKeyModel KeyModel = getSelectedKey();
+			String provider = txtProvider.getText();
 			try {
-				MyCipher.decryptFile(KeyModel.getAlgorithme(), KeyModel.getSecretKey(), inputfile, outputfile);
+				if (provider.length() == 0)
+					MyCipher.decryptFile(KeyModel.getAlgorithme(), KeyModel.getSecretKey(), inputfile, outputfile);
+				else
+					MyCipher.decryptFile(KeyModel.getAlgorithme(), provider, KeyModel.getSecretKey(), inputfile, outputfile);
 				JOptionPane.showMessageDialog(this, "Votre fichier est dechiffre avec succes.");
-				labelAlert.setText("Votre fichier est dechiffre avec succes. " + outputfile);
+				labelAlert.setText("Success -> " + outputfile);
 				Kit.makeAlertSuccess(panelAlerte, labelAlert);
 				resetData();
 			} catch (Exception e) {

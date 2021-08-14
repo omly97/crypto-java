@@ -18,7 +18,7 @@ public class SecretKeyDao extends KeyDao {
 		keyModel.setNom(rs.getString("nom"));
 		keyModel.setAlgorithme(rs.getString("algorithme"));
 		keyModel.setTaille(rs.getInt("taille"));
-		keyModel.setFormat(rs.getString("format"));
+		keyModel.setProvider(rs.getString("provider"));
 		keyModel.setEncodageHex(rs.getString("encodage_hex"));
 		return keyModel;
 	}
@@ -38,13 +38,13 @@ public class SecretKeyDao extends KeyDao {
 
 
 	public int store(SecretKeyModel keyModel) throws SQLException {
-		String query = "INSERT INTO secret_keys(nom, algorithme, taille, format, encodage_hex) VALUES (?,?,?,?,?)";
+		String query = "INSERT INTO secret_keys(nom, algorithme, taille, provider, encodage_hex) VALUES (?,?,?,?,?)";
 		Connection cnx = this.getConnection();
 		PreparedStatement pStmt = cnx.prepareStatement(query);
 		pStmt.setString(1, keyModel.getNom());
 		pStmt.setString(2, keyModel.getAlgorithme());
 		pStmt.setInt(3, keyModel.getTaille());
-		pStmt.setString(4, keyModel.getFormat());
+		pStmt.setString(4, keyModel.getProvider());
 		pStmt.setString(5, keyModel.getEncodageHex());
 		int res = pStmt.executeUpdate();
 		cnx.close();

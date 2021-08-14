@@ -14,7 +14,7 @@ CREATE TABLE `secret_keys` (
     `nom` VARCHAR(255) NOT NULL UNIQUE,
     `algorithme` VARCHAR(255) NOT NULL,
     `taille` INTEGER NOT NULL,
-    `format`  VARCHAR(255) NOT NULL,
+    `provider`  VARCHAR(255),
     `encodage_hex`  TEXT NOT NULL
 );
 
@@ -25,11 +25,9 @@ CREATE TABLE `key_pairs` (
     `id` INTEGER PRIMARY KEY AUTO_INCREMENT,
     `nom` VARCHAR(255) NOT NULL UNIQUE,
     `algorithme` VARCHAR(255) NOT NULL,
-    `public_key_taille` INTEGER NOT NULL,
-    `public_key_format`  VARCHAR(255) NOT NULL,
+    `taille` INTEGER NOT NULL,
+    `provider`  VARCHAR(255),
     `public_key_encodage_hex`  TEXT NOT NULL,
-    `private_key_taille` INTEGER NOT NULL,
-    `private_key_format`  VARCHAR(255) NOT NULL,
     `private_key_encodage_hex`  TEXT NOT NULL
 );
 

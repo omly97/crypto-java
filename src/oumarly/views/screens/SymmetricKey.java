@@ -33,7 +33,7 @@ public class SymmetricKey extends JPanel {
 		table = new JTable(model);
 		scPane = new JScrollPane(table);
 
-		model.setColumnIdentifiers(new String[] {"NOM", "ALGO", "TAILLE", "FORMAT"});
+		model.setColumnIdentifiers(new String[] {"NOM", "ALGO", "TAILLE", "PROVIDER"});
 		
 		// Design UI
 		Kit.designTable(table);
@@ -50,7 +50,7 @@ public class SymmetricKey extends JPanel {
 		ArrayList<SecretKeyModel> secretKeys = secretKeyDao.all();
 		model.setRowCount(0);
 		for (SecretKeyModel key : secretKeys) {
-			model.addRow(new Object[] {key.getNom(), key.getAlgorithme(), key.getTaille(), key.getFormat()});
+			model.addRow(new Object[] {key.getNom(), key.getAlgorithme(), key.getTaille(), key.getProvider()});
 		}
 	}
 }

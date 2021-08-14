@@ -14,25 +14,21 @@ public class KeyPairModel {
 	private Long id;
 	private String nom;
 	private String algorithme;
-	private int publicKeyTaille;
-	private String publicKeyFormat;
+	private int taille;
+	private String provider;
 	private String publicKeyEncodageHex;
-	private int privateKeyTaille;
-	private String privateKeyFormat;
 	private String privateKeyEncodageHex;
 
 	public KeyPairModel() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public KeyPairModel(String nom, String algorithme, KeyPair keyPair) {
+	public KeyPairModel(String nom, String algorithme, String provider, int taille, KeyPair keyPair) {
 		this.nom = nom;
 		this.algorithme = algorithme;
-		publicKeyTaille = keyPair.getPublic().getEncoded().length * 8;
-		publicKeyFormat = keyPair.getPublic().getFormat();
+		this.provider = provider;
+		this.taille = taille;
 		publicKeyEncodageHex = Converter.toHex(keyPair.getPublic().getEncoded());
-		privateKeyTaille = keyPair.getPrivate().getEncoded().length * 8;
-		privateKeyFormat = keyPair.getPrivate().getFormat();
 		privateKeyEncodageHex = Converter.toHex(keyPair.getPrivate().getEncoded());
 	}
 
@@ -60,20 +56,20 @@ public class KeyPairModel {
 		this.algorithme = algorithme;
 	}
 
-	public int getPublicKeyTaille() {
-		return publicKeyTaille;
+	public int getTaille() {
+		return taille;
 	}
 
-	public void setPublicKeyTaille(int publicKeyTaille) {
-		this.publicKeyTaille = publicKeyTaille;
+	public void setTaille(int taille) {
+		this.taille = taille;
 	}
-
-	public String getPublicKeyFormat() {
-		return publicKeyFormat;
+	
+	public String getProvider() {
+		return provider;
 	}
-
-	public void setPublicKeyFormat(String publicKeyFormat) {
-		this.publicKeyFormat = publicKeyFormat;
+	
+	public void setProvider(String provider) {
+		this.provider = provider;
 	}
 
 	public String getPublicKeyEncodageHex() {
@@ -82,22 +78,6 @@ public class KeyPairModel {
 
 	public void setPublicKeyEncodageHex(String publicKeyEncodageHex) {
 		this.publicKeyEncodageHex = publicKeyEncodageHex;
-	}
-
-	public int getPrivateKeyTaille() {
-		return privateKeyTaille;
-	}
-
-	public void setPrivateKeyTaille(int privateKeyTaille) {
-		this.privateKeyTaille = privateKeyTaille;
-	}
-
-	public String getPrivateKeyFormat() {
-		return privateKeyFormat;
-	}
-
-	public void setPrivateKeyFormat(String privateKeyFormat) {
-		this.privateKeyFormat = privateKeyFormat;
 	}
 
 	public String getPrivateKeyEncodageHex() {

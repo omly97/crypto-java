@@ -34,9 +34,11 @@ public class CreateKey extends JPanel implements ActionListener {
 	private JLabel labelAlert;
 	private JLabel labelNom;
 	private JLabel labelAlgo;
+	private JLabel labelProvider;
 	private JLabel labelTaille;
 	private JTextField txtNom;
 	private JTextField txtAlgo;
+	private JTextField txtProvider;
 	private JTextField txtTaille;
 	private JButton bSymmetric;
 	private JButton bAsymmetric;
@@ -59,9 +61,11 @@ public class CreateKey extends JPanel implements ActionListener {
 		labelAlert = new JLabel("Alerte Information");
 		labelNom = new JLabel("Nom de votre clé (juste pour nommer)");
 		labelAlgo = new JLabel("Algorithme ou transformation");
+		labelProvider = new JLabel("Provider (optionnel)");
 		labelTaille = new JLabel("Taille de la clé");
 		txtNom = new JTextField();
 		txtAlgo = new JTextField();
+		txtProvider = new JTextField();
 		txtTaille = new JTextField();
 		bSymmetric = new JButton("Créer cle secrete");
 		bAsymmetric = new JButton("Créer paire de clés");
@@ -73,13 +77,15 @@ public class CreateKey extends JPanel implements ActionListener {
 		panelNord.setLayout(new GridLayout(2, 1));
 		panelNord.add(panelTitre);
 		panelNord.add(panelAlerte);
-		panelNord.setBorder(new EmptyBorder(0, 0, 30, 0));
+		panelNord.setBorder(new EmptyBorder(0, 0, 20, 0));
 
-		panelCentre.setLayout(new GridLayout(6, 1, 0, 5));
+		panelCentre.setLayout(new GridLayout(8, 1, 0, 5));
 		panelCentre.add(labelNom);
 		panelCentre.add(txtNom);
 		panelCentre.add(labelAlgo);
 		panelCentre.add(txtAlgo);
+		panelCentre.add(labelProvider);
+		panelCentre.add(txtProvider);
 		panelCentre.add(labelTaille);
 		panelCentre.add(txtTaille);
 
@@ -99,9 +105,11 @@ public class CreateKey extends JPanel implements ActionListener {
 		Kit.makeAlertInfo(panelAlerte, labelAlert);
 		Kit.designLabel(labelNom);
 		Kit.designLabel(labelAlgo);
+		Kit.designLabel(labelProvider);
 		Kit.designLabel(labelTaille);
 		Kit.designTextField(txtNom);
 		Kit.designTextField(txtAlgo);
+		Kit.designTextField(txtProvider);
 		Kit.designTextField(txtTaille);
 		Kit.designButton(bSymmetric);
 		Kit.designButton(bAsymmetric);
@@ -116,12 +124,13 @@ public class CreateKey extends JPanel implements ActionListener {
 		add(panelNord, BorderLayout.NORTH);
 		add(panelCentre, BorderLayout.CENTER);
 		add(panelSud, BorderLayout.SOUTH);
-		setBorder(new EmptyBorder(80, 100, 80, 100));
+		setBorder(new EmptyBorder(40, 100, 40, 100));
 	}
 	
 	private void resetData() {
 		txtNom.setText("");
 		txtAlgo.setText("");
+		txtProvider.setText("");
 		txtTaille.setText("");
 	}
 	
@@ -141,7 +150,7 @@ public class CreateKey extends JPanel implements ActionListener {
 		if (ae.getSource() == bSymmetric) {
 			try {
 				SecretKey secretKey = MyKey.getSecretKey(txtAlgo.getText(), Integer.valueOf(txtTaille.getText()));
-				SecretKeyModel secretKeyModel = new SecretKeyModel(txtNom.getText(), secretKey);
+				SecretKeyModel secretKeyModel = new SecretKeyModel(txtNom.getText(), txtProvider.getText(), secretKey);
 				secretKeyDao.store(secretKeyModel);
 				resetData();
 				JOptionPane.showMessageDialog(this, "Votre clé est enregisrée avec succes.");
@@ -157,8 +166,9 @@ public class CreateKey extends JPanel implements ActionListener {
 		// TODO Create key pair
 		if (ae.getSource() == bAsymmetric) {
 			try {
-				KeyPair keyPair = MyKey.getKeyPair(txtAlgo.getText(), Integer.valueOf(txtTaille.getText()));
-				KeyPairModel keyPairModel = new KeyPairModel(txtNom.getText(), txtAlgo.getText(), keyPair);
+				int taille = Integer.valueOf(txtTaille.getText());
+				KeyPair keyPair = MyKey.getKeyPair(txtAlgo.getText(), taille);
+				KeyPairModel keyPairModel = new KeyPairModel(txtNom.getText(), txtAlgo.getText(), txtProvider.getText(), taille, keyPair);
 				keyPairDao.store(keyPairModel);
 				resetData();
 				JOptionPane.showMessageDialog(this, "Votre clé est enregisrée avec succes.");

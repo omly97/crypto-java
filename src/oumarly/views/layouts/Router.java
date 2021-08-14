@@ -87,7 +87,7 @@ public class Router extends JPanel {
 		try {
 			assymetricKey.fetchKeyPairs();
 			cardLayout.show(this, ASYMMETRIC_KEY);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			dialogError(e);
 		}
 	}

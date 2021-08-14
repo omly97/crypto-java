@@ -27,13 +27,13 @@ public class AssymetricKey extends JPanel {
 		// Create
 		model = new DefaultTableModel() {
 			public boolean isCellEditable(int row, int column) {
-				return false;//This causes all cells to be not editable
+				return false;
 			}
 		};
 		table = new JTable(model);
 		scPane = new JScrollPane(table);
 
-		model.setColumnIdentifiers(new String[] {"NOM", "ALGO"});
+		model.setColumnIdentifiers(new String[] {"NOM", "ALGO", "TAILLE", "PROVIDER"});
 		
 		// Design UI
 		Kit.designTable(table);
@@ -50,7 +50,7 @@ public class AssymetricKey extends JPanel {
 		ArrayList<KeyPairModel> pairKeys = keyPairDao.all();
 		model.setRowCount(0);
 		for (KeyPairModel key : pairKeys) {
-			model.addRow(new Object[] {key.getNom(), key.getAlgorithme()});
+			model.addRow(new Object[] {key.getNom(), key.getAlgorithme(), key.getTaille(), key.getProvider()});
 		}
 	}
 }

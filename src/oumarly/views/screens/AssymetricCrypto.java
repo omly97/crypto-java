@@ -5,6 +5,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.interfaces.DSAPrivateKey;
 import java.security.interfaces.DSAPublicKey;
 import java.security.interfaces.RSAPrivateKey;
@@ -44,9 +46,11 @@ public class AssymetricCrypto extends JPanel implements ActionListener {
 	private JLabel labelFile;
 	private JLabel labelFolder;
 	private JLabel labelKey;
+	private JLabel labelProvider;
 	private JTextField txtFile;
 	private JTextField txtFolder;
 	private JComboBox<String> comboKey;
+	private JTextField txtProvider;
 	private JButton bFile;
 	private JButton bFolder;
 	private JButton bCrypt;
@@ -76,9 +80,11 @@ public class AssymetricCrypto extends JPanel implements ActionListener {
 		labelFile = new JLabel("Fichier à chiffrer");
 		labelFolder = new JLabel("Dossier destination");
 		labelKey = new JLabel("Choisissez votre cle");
+		labelProvider = new JLabel("Provider (optionnel)");
 		txtFile = new JTextField();
 		txtFolder = new JTextField();
 		comboKey = new JComboBox<String>();
+		txtProvider = new JTextField();
 		bFile = new JButton("Parcourir");
 		bFolder = new JButton("Parcourir");
 		bCrypt = new JButton("Chiffrer");
@@ -91,7 +97,7 @@ public class AssymetricCrypto extends JPanel implements ActionListener {
 		panelNord.setLayout(new GridLayout(2, 1));
 		panelNord.add(panelTitre);
 		panelNord.add(panelAlerte);
-		panelNord.setBorder(new EmptyBorder(0, 0, 30, 0));
+		panelNord.setBorder(new EmptyBorder(0, 0, 20, 0));
 
 		panelFile.setLayout(new BorderLayout());
 		panelFile.add(txtFile, BorderLayout.CENTER);
@@ -101,13 +107,15 @@ public class AssymetricCrypto extends JPanel implements ActionListener {
 		panelFolder.add(txtFolder, BorderLayout.CENTER);
 		panelFolder.add(bFolder, BorderLayout.EAST);
 
-		panelCentre.setLayout(new GridLayout(6, 1, 0, 5));
+		panelCentre.setLayout(new GridLayout(8, 1, 0, 5));
 		panelCentre.add(labelFile);
 		panelCentre.add(panelFile);
 		panelCentre.add(labelFolder);
 		panelCentre.add(panelFolder);
 		panelCentre.add(labelKey);
 		panelCentre.add(comboKey);
+		panelCentre.add(labelProvider);
+		panelCentre.add(txtProvider);
 
 		panelSud.setLayout(new GridLayout(1, 2, 50, 0));
 		panelSud.add(bCrypt);
@@ -128,9 +136,11 @@ public class AssymetricCrypto extends JPanel implements ActionListener {
 		Kit.designLabel(labelFile);
 		Kit.designLabel(labelFolder);
 		Kit.designLabel(labelKey);
+		Kit.designLabel(labelProvider);
 		Kit.designTextField(txtFile);
 		Kit.designTextField(txtFolder);
 		Kit.designComboBox(comboKey);
+		Kit.designTextField(txtProvider);
 		Kit.designButton(bCrypt);
 		Kit.designButton(bDecrypt);
 		Kit.designButtonFileChosser(bFile);
@@ -148,12 +158,13 @@ public class AssymetricCrypto extends JPanel implements ActionListener {
 		add(panelNord, BorderLayout.NORTH);
 		add(panelCentre, BorderLayout.CENTER);
 		add(panelSud, BorderLayout.SOUTH);
-		setBorder(new EmptyBorder(80, 100, 80, 100));
+		setBorder(new EmptyBorder(40, 100, 40, 100));
 	}
 	
 	private void resetData() {
 		txtFile.setText("");
 		txtFolder.setText("");
+		txtProvider.setText("");
 	}
 	
 	private void loadKeys() throws SQLException {
@@ -178,6 +189,17 @@ public class AssymetricCrypto extends JPanel implements ActionListener {
 		labelAlert.setText("Alertes informations");
 		Kit.makeAlertInfo(panelAlerte, labelAlert);
 	}
+	
+	/*private Key formatKey(String algo, Key key) {
+		switch (algo) {
+		case "RSA":
+			return 
+			break;
+
+		default:
+			break;
+		}
+	}*/
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
@@ -209,31 +231,42 @@ public class AssymetricCrypto extends JPanel implements ActionListener {
 
 		// TODO encrypt file
 		if (ae.getSource() == bCrypt) {
-			String inputfile = txtFile.getText();
-			String outputfile = txtFolder.getText() + "/chiffre-" + filename;
-			KeyPairModel pairModel = getSelectedKey();
 			try {
+				String inputfile = txtFile.getText();
+				String outputfile = txtFolder.getText() + "/chiffre-" + filename;
+				KeyPairModel pairModel = getSelectedKey();
+				PublicKey pubKey = pairModel.getPublicKey();
+				String algo = pairModel.getAlgorithme();
+				String provider = txtProvider.getText();
+				
 				switch (pairModel.getAlgorithme()) {
 					case "RSA":
-						MyCipher.cryptFile(pairModel.getAlgorithme(), (RSAPublicKey) pairModel.getPublicKey(), inputfile, outputfile);
-						JOptionPane.showMessageDialog(this, "Votre fichier est chiffre avec succes.");
+						if (provider.length() == 0)
+							MyCipher.cryptFile(algo, (RSAPublicKey) pubKey, inputfile, outputfile);
+						else
+							MyCipher.cryptFile(algo, provider, (RSAPublicKey) pubKey, inputfile, outputfile);
 						break;
 						
 					case "DSA":
-						MyCipher.cryptFile(pairModel.getAlgorithme(), (DSAPublicKey) pairModel.getPublicKey(), inputfile, outputfile);
-						JOptionPane.showMessageDialog(this, "Votre fichier est chiffre avec succes.");
+						if (provider.length() == 0)
+							MyCipher.cryptFile(algo, (DSAPublicKey) pubKey, inputfile, outputfile);
+						else
+							MyCipher.cryptFile(algo, provider, (DSAPublicKey) pubKey, inputfile, outputfile);
 						break;
 						
 					case "DH":
-						MyCipher.cryptFile(pairModel.getAlgorithme(), (DHPublicKey) pairModel.getPublicKey(), inputfile, outputfile);
-						JOptionPane.showMessageDialog(this, "Votre fichier est chiffre avec succes.");
+						if (provider.length() == 0)
+							MyCipher.cryptFile(algo, (DHPublicKey) pubKey, inputfile, outputfile);
+						else
+							MyCipher.cryptFile(algo, provider, (DSAPublicKey) pubKey, inputfile, outputfile);
 						break;
 		
 					default:
-						JOptionPane.showMessageDialog(this, "Algorithe non reconnu.", "Erreur", JOptionPane.WARNING_MESSAGE);
 						break;
 				}
-				labelAlert.setText("Votre fichier est chiffre avec succes. " + outputfile);
+				
+				JOptionPane.showMessageDialog(this, "Votre fichier est chiffre avec succes.");
+				labelAlert.setText("Success -> " + outputfile);
 				Kit.makeAlertSuccess(panelAlerte, labelAlert);
 				resetData();
 			} catch (Exception e) {
@@ -245,31 +278,42 @@ public class AssymetricCrypto extends JPanel implements ActionListener {
 
 		// TODO decrypt file
 		if (ae.getSource() == bDecrypt) {
-			String inputfile = txtFile.getText();
-			String outputfile = txtFolder.getText() + "/dechiffre-" + filename;
-			KeyPairModel pairModel = getSelectedKey();
 			try {
+				String inputfile = txtFile.getText();
+				String outputfile = txtFolder.getText() + "/dechiffre-" + filename;
+				KeyPairModel pairModel = getSelectedKey();
+				PrivateKey privKey = pairModel.getPrivateKey();
+				String algo = pairModel.getAlgorithme();
+				String provider = txtProvider.getText();
+
 				switch (pairModel.getAlgorithme()) {
 					case "RSA":
-						MyCipher.decryptFile(pairModel.getAlgorithme(), (RSAPrivateKey) pairModel.getPrivateKey(), inputfile, outputfile);
-						JOptionPane.showMessageDialog(this, "Votre fichier est dechiffre avec succes.");
+						if (provider.length() == 0)
+							MyCipher.decryptFile(algo, (RSAPrivateKey) privKey, inputfile, outputfile);
+						else
+							MyCipher.decryptFile(algo, provider, (RSAPrivateKey) privKey, inputfile, outputfile);
 						break;
 						
 					case "DSA":
-						MyCipher.decryptFile(pairModel.getAlgorithme(), (DSAPrivateKey) pairModel.getPrivateKey(), inputfile, outputfile);
-						JOptionPane.showMessageDialog(this, "Votre fichier est dechiffre avec succes.");
+						if (provider.length() == 0)
+							MyCipher.decryptFile(algo, (DSAPrivateKey) privKey, inputfile, outputfile);
+						else
+							MyCipher.decryptFile(algo, provider, (DSAPrivateKey) privKey, inputfile, outputfile);
 						break;
 						
 					case "DH":
-						MyCipher.decryptFile(pairModel.getAlgorithme(), (DHPrivateKey) pairModel.getPrivateKey(), inputfile, outputfile);
-						JOptionPane.showMessageDialog(this, "Votre fichier est dechiffre avec succes.");
+						if (provider.length() == 0)
+							MyCipher.decryptFile(algo, (DHPrivateKey) privKey, inputfile, outputfile);
+						else
+							MyCipher.decryptFile(algo, provider, (DHPrivateKey) privKey, inputfile, outputfile);
 						break;
 		
 					default:
-						JOptionPane.showMessageDialog(this, "Algorithe non reconnu.", "Erreur", JOptionPane.WARNING_MESSAGE);
 						break;
 				}
-				labelAlert.setText("Votre fichier est dechiffre avec succes. " + outputfile);
+
+				JOptionPane.showMessageDialog(this, "Votre fichier est dechiffre avec succes.");
+				labelAlert.setText("Success -> " + outputfile);
 				Kit.makeAlertSuccess(panelAlerte, labelAlert);
 				resetData();
 			} catch (Exception e) {
