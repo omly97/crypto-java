@@ -28,12 +28,14 @@ public class Kit {
 	private static final Color COLOR_WHITE = new Color(255, 255, 255);
 	private static final Color COLOR_INDIGO = new Color(71, 65, 124);
 	private static final Color COLOR_BLACK_LIGHT = new Color(226, 227, 229);
-	private static final Color COLOR_BLUE_LIGHT = new Color(204, 229, 255);
-	private static final Color COLOR_BLUE_DARK = new Color(33, 150, 243);
-	private static final Color COLOR_GREEN_LIGHT = new Color(212, 237, 218);
-	private static final Color COLOR_GREEN_DARK = new Color(76, 175, 80);
-	private static final Color COLOR_RED_LIGHT = new Color(248, 215, 218);
-	private static final Color COLOR_RED_DARK = new Color(255, 82, 82);
+	private static final Color COLOR_BLUE_LIGHT = new Color(173, 232, 244);
+	private static final Color COLOR_BLUE_DARK = new Color(2, 62, 138);
+	private static final Color COLOR_GREEN_LIGHT = new Color(183, 228, 199);
+	private static final Color COLOR_GREEN_DARK = new Color(45, 106, 79);
+	private static final Color COLOR_RED_LIGHT = new Color(251, 195, 188);
+	private static final Color COLOR_RED_DARK = new Color(239, 99, 81);
+	private static final Color COLOR_YELLOW_LIGHT = new Color(255, 246, 204);
+	private static final Color COLOR_YELLOW_DARK = new Color(255, 212, 0);
 
 	private static final Font FONT_VERDANA_12 = new Font("Verdana", Font.BOLD, 12);
 	
@@ -190,6 +192,16 @@ public class Kit {
 	public static void makeAlertDanger(JPanel panel, JLabel label) {
 		label.setForeground(COLOR_RED_DARK);
 		panel.setBackground(COLOR_RED_LIGHT);
+		panel.setBorder(BORDER_ALERT);
+	}
+
+	/**
+	 * Design alert warning
+	 * @param panel
+	 */
+	public static void makeAlertWarning(JPanel panel, JLabel label) {
+		label.setForeground(COLOR_YELLOW_DARK);
+		panel.setBackground(COLOR_YELLOW_LIGHT);
 		panel.setBorder(BORDER_ALERT);
 	}
 
