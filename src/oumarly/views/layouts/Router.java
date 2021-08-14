@@ -58,7 +58,7 @@ public class Router extends JPanel {
 	
 	public void showSymmetricCrypto() {
 		try {
-			symmetricCrypto.loadKeys();
+			symmetricCrypto.init();
 			cardLayout.show(this, SYMMETRIC_CRYPTO);
 		} catch (SQLException e) {
 			dialogError(e);
@@ -76,7 +76,7 @@ public class Router extends JPanel {
 	
 	public void showAsymmetricCrypto() {
 		try {
-			assymetricCrypto.loadKeys();
+			assymetricCrypto.init();
 			cardLayout.show(this, ASYMMETRIC_CRYPTO);
 		} catch (SQLException e) {
 			dialogError(e);
@@ -93,6 +93,7 @@ public class Router extends JPanel {
 	}
 	
 	public void showCreateKey() {
+		createKey.init();
 		cardLayout.show(this, CREATE_KEY);
 	}
 	

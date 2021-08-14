@@ -16,24 +16,24 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 
 public class Kit {
 	
-	public static final Color XDARK = new Color(44, 48, 55);
-	public static final Color XWHITE = new Color(188, 186, 187);
-	public static final Color XBLUE = new Color(89, 131, 208);
-	public static final Color XGRAY = new Color(60, 60, 60);
+	public static final Color NAV_BG = new Color(52, 58, 64);
+	public static final Color NAV_FG = new Color(248, 249, 250);
+	public static final Color NAV_MENU_ACTIVE = new Color(73, 80, 87);
 
 	
 	private static final Color COLOR_WHITE = new Color(255, 255, 255);
 	private static final Color COLOR_INDIGO = new Color(71, 65, 124);
 	private static final Color COLOR_BLACK_LIGHT = new Color(226, 227, 229);
 	private static final Color COLOR_BLUE_LIGHT = new Color(204, 229, 255);
-	private static final Color COLOR_BLUE_DARK = new Color(60, 112, 169);
+	private static final Color COLOR_BLUE_DARK = new Color(33, 150, 243);
 	private static final Color COLOR_GREEN_LIGHT = new Color(212, 237, 218);
-	private static final Color COLOR_GREEN_DARK = new Color(102, 151, 114);
+	private static final Color COLOR_GREEN_DARK = new Color(76, 175, 80);
 	private static final Color COLOR_RED_LIGHT = new Color(248, 215, 218);
-	private static final Color COLOR_RED_DARK = new Color(126, 44, 51);
+	private static final Color COLOR_RED_DARK = new Color(255, 82, 82);
 
 	private static final Font FONT_VERDANA_12 = new Font("Verdana", Font.BOLD, 12);
 	
@@ -116,10 +116,18 @@ public class Kit {
 		table.setForeground(COLOR_INDIGO);
 		table.setFont(FONT_VERDANA_12);
 
+		// design table header
 		table.getTableHeader().setBackground(COLOR_WHITE);
 		table.getTableHeader().setForeground(COLOR_INDIGO);
 		table.getTableHeader().setFont(FONT_VERDANA_12);
 		table.getTableHeader().setPreferredSize(new Dimension(10, 30));
+		
+		// center cell content
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+		for (int i = 0; i < table.getColumnCount(); i++) {
+			table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+		}
 	}
 
 	/**

@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.security.KeyPair;
+import java.sql.SQLException;
 
 import javax.crypto.SecretKey;
 import javax.swing.JButton;
@@ -109,6 +110,16 @@ public class CreateKey extends JPanel implements ActionListener {
 		txtAlgo.setText("");
 		txtTaille.setText("");
 	}
+	
+	/**
+	 * To execute before cardLayout show this screen
+	 * @throws SQLException
+	 */
+	public void init() {
+		resetData();
+		labelAlert.setText("Alertes informations");
+		Kit.makeAlertInfo(panelNord, labelAlert);
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
@@ -120,8 +131,12 @@ public class CreateKey extends JPanel implements ActionListener {
 				secretKeyDao.store(secretKeyModel);
 				resetData();
 				JOptionPane.showMessageDialog(this, "Votre clé est enregisrée avec succes.");
+				labelAlert.setText("Votre clé est enregisrée avec succes");
+				Kit.makeAlertSuccess(panelNord, labelAlert);
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur", JOptionPane.WARNING_MESSAGE);
+				labelAlert.setText(e.getMessage());
+				Kit.makeAlertDanger(panelNord, labelAlert);
 			}
 		}
 
@@ -133,8 +148,12 @@ public class CreateKey extends JPanel implements ActionListener {
 				keyPairDao.store(keyPairModel);
 				resetData();
 				JOptionPane.showMessageDialog(this, "Votre clé est enregisrée avec succes.");
+				labelAlert.setText("Votre clé est enregisrée avec succes");
+				Kit.makeAlertSuccess(panelNord, labelAlert);
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur", JOptionPane.WARNING_MESSAGE);
+				labelAlert.setText(e.getMessage());
+				Kit.makeAlertDanger(panelNord, labelAlert);
 			}
 		}
 	}

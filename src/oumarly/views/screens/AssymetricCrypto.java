@@ -137,7 +137,12 @@ public class AssymetricCrypto extends JPanel implements ActionListener {
 		setBorder(new EmptyBorder(100, 100, 150, 100));
 	}
 	
-	public void loadKeys() throws SQLException {
+	private void resetData() {
+		txtFile.setText("");
+		txtFolder.setText("");
+	}
+	
+	private void loadKeys() throws SQLException {
 		keys = keyPairDao.all();
 		comboKey.removeAllItems();
 		for (KeyPairModel key : keys) {
@@ -148,7 +153,17 @@ public class AssymetricCrypto extends JPanel implements ActionListener {
 	private KeyPairModel getSelectedKey() {
 		return keys.get(comboKey.getSelectedIndex());
 	}
-
+	
+	/**
+	 * To execute before cardLayout show this screen
+	 * @throws SQLException
+	 */
+	public void init() throws SQLException {
+		resetData();
+		loadKeys();
+		labelAlert.setText("Alertes informations");
+		Kit.makeAlertInfo(panelNord, labelAlert);
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
@@ -204,8 +219,13 @@ public class AssymetricCrypto extends JPanel implements ActionListener {
 						JOptionPane.showMessageDialog(this, "Algorithe non reconnu.", "Erreur", JOptionPane.WARNING_MESSAGE);
 						break;
 				}
+				labelAlert.setText("Votre fichier est chiffre avec succes. " + outputfile);
+				Kit.makeAlertSuccess(panelNord, labelAlert);
+				resetData();
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur", JOptionPane.WARNING_MESSAGE);
+				labelAlert.setText(e.getMessage());
+				Kit.makeAlertDanger(panelNord, labelAlert);
 			}
 		}
 
@@ -235,8 +255,13 @@ public class AssymetricCrypto extends JPanel implements ActionListener {
 						JOptionPane.showMessageDialog(this, "Algorithe non reconnu.", "Erreur", JOptionPane.WARNING_MESSAGE);
 						break;
 				}
+				labelAlert.setText("Votre fichier est dechiffre avec succes. " + outputfile);
+				Kit.makeAlertSuccess(panelNord, labelAlert);
+				resetData();
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur", JOptionPane.WARNING_MESSAGE);
+				labelAlert.setText(e.getMessage());
+				Kit.makeAlertDanger(panelNord, labelAlert);
 			}
 		}
 	}

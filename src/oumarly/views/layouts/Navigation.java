@@ -7,6 +7,9 @@ import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
 import oumarly.Kit;
@@ -41,7 +44,10 @@ public class Navigation extends JPanel {
 		add(createKeyBtn);
 		add(symKeyBtn);
 		add(assymKeyBtn);
-		setBackground(Kit.XDARK);
+		setBackground(Kit.NAV_BG);
+		setBorder(new EmptyBorder(0, 0, 180, 0));
+		
+		selectMenu(welcomeBtn);
 		
 		veButtons = new Vector<JButton>();
 		veButtons.add(welcomeBtn);
@@ -75,23 +81,30 @@ public class Navigation extends JPanel {
 	public JButton getCreateKeyBtn() {
 		return createKeyBtn;
 	}
+	
+	private void selectMenu(JButton b) {
+		b.setBackground(Kit.NAV_MENU_ACTIVE);
+		b.setBorder(new CompoundBorder(new MatteBorder(0, 3, 0, 0, Kit.NAV_FG), new EmptyBorder(0, 25, 0, 25)));
+	}
+	
+	private void unselectMenu(JButton b) {
+		b.setBackground(Kit.NAV_BG);
+		b.setBorder(new CompoundBorder(new MatteBorder(1, 1, 1, 1, Kit.NAV_BG), new EmptyBorder(0, 25, 0, 25)));
+	}
 
 	private JButton createMenuButton(String text) {
 		JButton b = new JButton(text);
 		b.setBorderPainted(true);
 		b.setFocusPainted(false);
-		b.setBackground(Kit.XDARK);
-		b.setForeground(Kit.XWHITE);
-		b.setBorder(new MatteBorder(1, 1, 1, 1, Kit.XWHITE));
+		b.setBackground(Kit.NAV_BG);
+		b.setForeground(Kit.NAV_FG);
+		b.setBorder(new CompoundBorder(new MatteBorder(1, 1, 1, 1, Kit.NAV_BG), new EmptyBorder(0, 25, 0, 25)));
+		b.setHorizontalAlignment(SwingConstants.LEFT);
 		b.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				for (JButton btn : veButtons) {
-					btn.setBackground(Kit.XDARK);
-					btn.setBorder(new MatteBorder(1, 1, 1, 1, Kit.XDARK));
-				}
-				b.setBackground(Kit.XGRAY);
-				b.setBorder(new MatteBorder(0, 7, 0, 0, Kit.XBLUE));
+				for (JButton btn : veButtons) unselectMenu(btn);
+				selectMenu(b);
 			}
 		});
 		return b;

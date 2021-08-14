@@ -132,7 +132,12 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 		setBorder(new EmptyBorder(100, 100, 150, 100));
 	}
 	
-	public void loadKeys() throws SQLException {
+	private void resetData() {
+		txtFile.setText("");
+		txtFolder.setText("");
+	}
+	
+	private void loadKeys() throws SQLException {
 		keys = secretKeyDao.all();
 		comboKey.removeAllItems();
 		for (SecretKeyModel key : keys) {
@@ -143,7 +148,17 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 	private SecretKeyModel getSelectedKey() {
 		return keys.get(comboKey.getSelectedIndex());
 	}
-
+	
+	/**
+	 * To execute before cardLayout show this screen
+	 * @throws SQLException
+	 */
+	public void init() throws SQLException {
+		resetData();
+		loadKeys();
+		labelAlert.setText("Alertes informations");
+		Kit.makeAlertInfo(panelNord, labelAlert);
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
@@ -181,8 +196,13 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 			try {
 				MyCipher.cryptFile(KeyModel.getAlgorithme(), KeyModel.getSecretKey(), inputfile, outputfile);
 				JOptionPane.showMessageDialog(this, "Votre fichier est chiffre avec succes.");
+				labelAlert.setText("Votre fichier est chiffre avec succes. " + outputfile);
+				Kit.makeAlertSuccess(panelNord, labelAlert);
+				resetData();
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur", JOptionPane.WARNING_MESSAGE);
+				labelAlert.setText(e.getMessage());
+				Kit.makeAlertDanger(panelNord, labelAlert);
 			}
 		}
 		
@@ -194,8 +214,13 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 			try {
 				MyCipher.decryptFile(KeyModel.getAlgorithme(), KeyModel.getSecretKey(), inputfile, outputfile);
 				JOptionPane.showMessageDialog(this, "Votre fichier est dechiffre avec succes.");
+				labelAlert.setText("Votre fichier est dechiffre avec succes. " + outputfile);
+				Kit.makeAlertSuccess(panelNord, labelAlert);
+				resetData();
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur", JOptionPane.WARNING_MESSAGE);
+				labelAlert.setText(e.getMessage());
+				Kit.makeAlertDanger(panelNord, labelAlert);
 			}
 		}
 	}

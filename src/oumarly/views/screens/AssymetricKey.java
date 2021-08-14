@@ -25,7 +25,11 @@ public class AssymetricKey extends JPanel {
 	public AssymetricKey() {
 		super();
 		// Create
-		model = new DefaultTableModel();
+		model = new DefaultTableModel() {
+			public boolean isCellEditable(int row, int column) {
+				return false;//This causes all cells to be not editable
+			}
+		};
 		table = new JTable(model);
 		scPane = new JScrollPane(table);
 
