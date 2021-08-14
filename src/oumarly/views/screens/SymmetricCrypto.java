@@ -29,8 +29,11 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 	private JPanel panelNord;
 	private JPanel panelCentre;
 	private JPanel panelSud;
+	private JPanel panelTitre;
+	private JPanel panelAlerte;
 	private JPanel panelFile;
 	private JPanel panelFolder;
+	private JLabel labelTitre;
 	private JLabel labelAlert;
 	private JLabel labelFile;
 	private JLabel labelFolder;
@@ -58,8 +61,11 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 		panelNord = new JPanel();
 		panelCentre = new JPanel();
 		panelSud = new JPanel();
+		panelTitre = new JPanel();
+		panelAlerte = new JPanel();
 		panelFile = new JPanel();
 		panelFolder = new JPanel();
+		labelTitre = new JLabel("Crypto à clé secrète");
 		labelAlert = new JLabel("Alerte Information");
 		labelFile = new JLabel("Fichier à chiffrer");
 		labelFolder = new JLabel("Dossier destination");
@@ -73,8 +79,13 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 		bDecrypt = new JButton("Dechiffrer");
 		
 		// position
-		panelNord.setLayout(new BorderLayout());
-		panelNord.add(labelAlert, BorderLayout.CENTER);
+		panelTitre.add(labelTitre);
+		panelAlerte.add(labelAlert);
+
+		panelNord.setLayout(new GridLayout(2, 1));
+		panelNord.add(panelTitre);
+		panelNord.add(panelAlerte);
+		panelNord.setBorder(new EmptyBorder(0, 0, 30, 0));
 
 		panelFile.setLayout(new BorderLayout());
 		panelFile.add(txtFile, BorderLayout.CENTER);
@@ -99,13 +110,16 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 		panelSud.setBorder(new EmptyBorder(30, 0, 0, 0));
 		
 		// Design JPanel
+		panelNord.setOpaque(false);
 		panelCentre.setOpaque(false);
 		panelSud.setOpaque(false);
+		panelTitre.setOpaque(false);
 		panelFile.setOpaque(false);
 		panelFolder.setOpaque(false);
 
 		// Design UI
-		Kit.makeAlertInfo(panelNord, labelAlert);
+		Kit.designTitre(labelTitre);
+		Kit.makeAlertInfo(panelAlerte, labelAlert);
 		Kit.designLabel(labelFile);
 		Kit.designLabel(labelFolder);
 		Kit.designLabel(labelKey);
@@ -129,7 +143,7 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 		add(panelNord, BorderLayout.NORTH);
 		add(panelCentre, BorderLayout.CENTER);
 		add(panelSud, BorderLayout.SOUTH);
-		setBorder(new EmptyBorder(100, 100, 150, 100));
+		setBorder(new EmptyBorder(80, 100, 80, 100));
 	}
 	
 	private void resetData() {
@@ -157,7 +171,7 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 		resetData();
 		loadKeys();
 		labelAlert.setText("Alertes informations");
-		Kit.makeAlertInfo(panelNord, labelAlert);
+		Kit.makeAlertInfo(panelAlerte, labelAlert);
 	}
 
 	@Override
@@ -197,12 +211,12 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 				MyCipher.cryptFile(KeyModel.getAlgorithme(), KeyModel.getSecretKey(), inputfile, outputfile);
 				JOptionPane.showMessageDialog(this, "Votre fichier est chiffre avec succes.");
 				labelAlert.setText("Votre fichier est chiffre avec succes. " + outputfile);
-				Kit.makeAlertSuccess(panelNord, labelAlert);
+				Kit.makeAlertSuccess(panelAlerte, labelAlert);
 				resetData();
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur", JOptionPane.WARNING_MESSAGE);
 				labelAlert.setText(e.getMessage());
-				Kit.makeAlertDanger(panelNord, labelAlert);
+				Kit.makeAlertDanger(panelAlerte, labelAlert);
 			}
 		}
 		
@@ -215,12 +229,12 @@ public class SymmetricCrypto extends JPanel implements ActionListener {
 				MyCipher.decryptFile(KeyModel.getAlgorithme(), KeyModel.getSecretKey(), inputfile, outputfile);
 				JOptionPane.showMessageDialog(this, "Votre fichier est dechiffre avec succes.");
 				labelAlert.setText("Votre fichier est dechiffre avec succes. " + outputfile);
-				Kit.makeAlertSuccess(panelNord, labelAlert);
+				Kit.makeAlertSuccess(panelAlerte, labelAlert);
 				resetData();
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur", JOptionPane.WARNING_MESSAGE);
 				labelAlert.setText(e.getMessage());
-				Kit.makeAlertDanger(panelNord, labelAlert);
+				Kit.makeAlertDanger(panelAlerte, labelAlert);
 			}
 		}
 	}

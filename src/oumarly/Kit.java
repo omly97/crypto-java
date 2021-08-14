@@ -58,6 +58,30 @@ public class Kit {
 		label.setForeground(COLOR_INDIGO);
 	}
 	
+
+	/**
+	 * Design screen title
+	 * @param label
+	 */
+	public static void designTitre(JLabel label) {
+		label.setFont(FONT_VERDANA_12);
+		label.setForeground(COLOR_INDIGO);
+		label.setFont(label.getFont().deriveFont(18.0f));
+	}
+	
+
+	/**
+	 * Design welcome screen title
+	 * @param label
+	 */
+	public static void makeWelcomeMessage(JPanel panel, JLabel label) {
+		label.setFont(FONT_VERDANA_12);
+		label.setForeground(COLOR_INDIGO);
+		label.setFont(label.getFont().deriveFont(30.0f));
+		panel.setOpaque(false);
+		panel.setBorder(new MatteBorder(0, 0, 5, 0, COLOR_INDIGO));
+	}
+	
 	/**
 	 * Design text field
 	 * @param field

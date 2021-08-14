@@ -28,6 +28,9 @@ public class CreateKey extends JPanel implements ActionListener {
 	private JPanel panelNord;
 	private JPanel panelCentre;
 	private JPanel panelSud;
+	private JPanel panelTitre;
+	private JPanel panelAlerte;
+	private JLabel labelTitre;
 	private JLabel labelAlert;
 	private JLabel labelNom;
 	private JLabel labelAlgo;
@@ -50,6 +53,9 @@ public class CreateKey extends JPanel implements ActionListener {
 		panelNord = new JPanel();
 		panelCentre = new JPanel();
 		panelSud = new JPanel();
+		panelTitre = new JPanel();
+		panelAlerte = new JPanel();
+		labelTitre = new JLabel("Création de clés cryptos");
 		labelAlert = new JLabel("Alerte Information");
 		labelNom = new JLabel("Nom de votre clé (juste pour nommer)");
 		labelAlgo = new JLabel("Algorithme ou transformation");
@@ -61,8 +67,13 @@ public class CreateKey extends JPanel implements ActionListener {
 		bAsymmetric = new JButton("Créer paire de clés");
 		
 		// position
-		panelNord.setLayout(new BorderLayout());
-		panelNord.add(labelAlert, BorderLayout.CENTER);
+		panelTitre.add(labelTitre);
+		panelAlerte.add(labelAlert);
+
+		panelNord.setLayout(new GridLayout(2, 1));
+		panelNord.add(panelTitre);
+		panelNord.add(panelAlerte);
+		panelNord.setBorder(new EmptyBorder(0, 0, 30, 0));
 
 		panelCentre.setLayout(new GridLayout(6, 1, 0, 5));
 		panelCentre.add(labelNom);
@@ -78,11 +89,14 @@ public class CreateKey extends JPanel implements ActionListener {
 		panelSud.setBorder(new EmptyBorder(30, 0, 0, 0));
 		
 		// Design JPanel
+		panelNord.setOpaque(false);
 		panelCentre.setOpaque(false);
 		panelSud.setOpaque(false);
+		panelTitre.setOpaque(false);
 		
 		// Design UI
-		Kit.makeAlertInfo(panelNord, labelAlert);
+		Kit.designTitre(labelTitre);
+		Kit.makeAlertInfo(panelAlerte, labelAlert);
 		Kit.designLabel(labelNom);
 		Kit.designLabel(labelAlgo);
 		Kit.designLabel(labelTaille);
@@ -102,7 +116,7 @@ public class CreateKey extends JPanel implements ActionListener {
 		add(panelNord, BorderLayout.NORTH);
 		add(panelCentre, BorderLayout.CENTER);
 		add(panelSud, BorderLayout.SOUTH);
-		setBorder(new EmptyBorder(100, 100, 150, 100));
+		setBorder(new EmptyBorder(80, 100, 80, 100));
 	}
 	
 	private void resetData() {
@@ -118,7 +132,7 @@ public class CreateKey extends JPanel implements ActionListener {
 	public void init() {
 		resetData();
 		labelAlert.setText("Alertes informations");
-		Kit.makeAlertInfo(panelNord, labelAlert);
+		Kit.makeAlertInfo(panelAlerte, labelAlert);
 	}
 
 	@Override
@@ -132,11 +146,11 @@ public class CreateKey extends JPanel implements ActionListener {
 				resetData();
 				JOptionPane.showMessageDialog(this, "Votre clé est enregisrée avec succes.");
 				labelAlert.setText("Votre clé est enregisrée avec succes");
-				Kit.makeAlertSuccess(panelNord, labelAlert);
+				Kit.makeAlertSuccess(panelAlerte, labelAlert);
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur", JOptionPane.WARNING_MESSAGE);
 				labelAlert.setText(e.getMessage());
-				Kit.makeAlertDanger(panelNord, labelAlert);
+				Kit.makeAlertDanger(panelAlerte, labelAlert);
 			}
 		}
 
@@ -149,11 +163,11 @@ public class CreateKey extends JPanel implements ActionListener {
 				resetData();
 				JOptionPane.showMessageDialog(this, "Votre clé est enregisrée avec succes.");
 				labelAlert.setText("Votre clé est enregisrée avec succes");
-				Kit.makeAlertSuccess(panelNord, labelAlert);
+				Kit.makeAlertSuccess(panelAlerte, labelAlert);
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur", JOptionPane.WARNING_MESSAGE);
 				labelAlert.setText(e.getMessage());
-				Kit.makeAlertDanger(panelNord, labelAlert);
+				Kit.makeAlertDanger(panelAlerte, labelAlert);
 			}
 		}
 	}

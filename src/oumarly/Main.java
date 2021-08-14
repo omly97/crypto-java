@@ -29,6 +29,8 @@ public class Main {
 		navigation.setMinimumSize(new Dimension(250, 550));
 		router = new Router();
 		
+		
+		// link navigation to router
 		navigation.getWelcomeBtn().addActionListener(new ActionListener() {
 			
 			@Override
@@ -89,8 +91,8 @@ public class Main {
 		JFrame frame = new JFrame("crypto m2tdsi");
 		frame.add(splitPane);
 		frame.setLocation(200, 50);
-		frame.setSize(1000, 700);
-		frame.setMinimumSize(new Dimension(900, 550));
+		frame.setSize(900, 700);
+		frame.setMinimumSize(new Dimension(900, 650));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}

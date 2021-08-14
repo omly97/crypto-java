@@ -31,11 +31,11 @@ public class Navigation extends JPanel {
 		super();
 
 		welcomeBtn = createMenuButton("Accueil");
-		symCryptoBtn = createMenuButton("Cryptographie symetrique");
-		symKeyBtn = createMenuButton("Cle symetrique");
-		assymCryptoBtn = createMenuButton("Cryptographie asymetrique");
-		assymKeyBtn = createMenuButton("Cle asymetrique");
-		createKeyBtn = createMenuButton("Creation de cles");
+		symCryptoBtn = createMenuButton("Cryptographie symétrique");
+		symKeyBtn = createMenuButton("Clé secrètes");
+		assymCryptoBtn = createMenuButton("Cryptographie asymétrique");
+		assymKeyBtn = createMenuButton("Clés publiques");
+		createKeyBtn = createMenuButton("Création de clés");
 		
 		setLayout(new GridLayout(6, 1));
 		add(welcomeBtn);
