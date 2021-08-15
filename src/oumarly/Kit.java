@@ -31,11 +31,11 @@ public class Kit {
 	private static final Color COLOR_BLUE_LIGHT = new Color(173, 232, 244);
 	private static final Color COLOR_BLUE_DARK = new Color(2, 62, 138);
 	private static final Color COLOR_GREEN_LIGHT = new Color(183, 228, 199);
-	private static final Color COLOR_GREEN_DARK = new Color(45, 106, 79);
+	private static final Color COLOR_GREEN_DARK = new Color(27, 67, 50);
 	private static final Color COLOR_RED_LIGHT = new Color(251, 195, 188);
-	private static final Color COLOR_RED_DARK = new Color(239, 99, 81);
-	private static final Color COLOR_YELLOW_LIGHT = new Color(255, 246, 204);
-	private static final Color COLOR_YELLOW_DARK = new Color(255, 212, 0);
+	private static final Color COLOR_RED_DARK = new Color(148, 27, 12);
+	private static final Color COLOR_YELLOW_LIGHT = new Color(255, 225, 105);
+	private static final Color COLOR_YELLOW_DARK = new Color(128, 91, 16);
 
 	private static final Font FONT_VERDANA_12 = new Font("Verdana", Font.BOLD, 12);
 	

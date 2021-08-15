@@ -1,9 +1,10 @@
 package oumarly.views.screens;
 
-import java.awt.GridLayout;
+import java.awt.BorderLayout;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -17,6 +18,8 @@ import oumarly.app.model.KeyPairModel;
 @SuppressWarnings("serial")
 public class AssymetricKey extends JPanel {
 	
+	private JPanel panelNord;
+	private JLabel labelTitre;
 	private KeyPairDao keyPairDao;
 	private DefaultTableModel model;
 	private JTable table;
@@ -25,6 +28,9 @@ public class AssymetricKey extends JPanel {
 	public AssymetricKey() {
 		super();
 		// Create
+		panelNord = new JPanel();
+		labelTitre = new JLabel("Liste des paires de clés");
+
 		model = new DefaultTableModel() {
 			public boolean isCellEditable(int row, int column) {
 				return false;
@@ -32,15 +38,21 @@ public class AssymetricKey extends JPanel {
 		};
 		table = new JTable(model);
 		scPane = new JScrollPane(table);
-
 		model.setColumnIdentifiers(new String[] {"NOM", "ALGO", "TAILLE", "PROVIDER"});
 		
+		// position
+		panelNord.add(labelTitre);
+		panelNord.setOpaque(false);
+		panelNord.setBorder(new EmptyBorder(0, 0, 30, 0));
+		
 		// Design UI
+		Kit.designTitre(labelTitre);
 		Kit.designTable(table);
 		Kit.designScrollPane(scPane);
 
-		setLayout(new GridLayout(0, 1));
-		add(scPane);
+		setLayout(new BorderLayout());
+		add(panelNord, BorderLayout.NORTH);
+		add(scPane, BorderLayout.CENTER);
 		setBorder(new EmptyBorder(20, 20, 20, 20));
 		setOpaque(false);
 	}
